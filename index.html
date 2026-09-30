@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>For Prapti ❤️️</title>
+  <title>For My Queen ❤️</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:wght@300;400;500;600&display=swap');
 
@@ -15,8 +15,7 @@
 
     body {
       min-height: 100vh;
-      background: #0a0406; /* Deep dark romantic background */
-      background-image: radial-gradient(circle at center, #260a15 0%, #0a0406 100%);
+      background: #080305; /* Deep dark aesthetic background */
       font-family: 'Poppins', sans-serif;
       display: flex;
       justify-content: center;
@@ -24,23 +23,35 @@
       overflow: hidden;
       padding: 20px;
       color: #fce7f3;
+      position: relative;
+    }
+
+    /* Interactive Background Canvas */
+    #bg-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none; /* Let clicks pass through */
     }
 
     /* Elegant Glass Card */
     .card {
-      background: rgba(30, 10, 18, 0.4);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(244, 63, 94, 0.15);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(244, 63, 94, 0.05);
-      border-radius: 24px;
+      background: rgba(20, 8, 12, 0.5);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(244, 63, 94, 0.2);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), inset 0 0 15px rgba(244, 63, 94, 0.05);
+      border-radius: 20px;
       padding: 40px 35px;
       max-width: 600px;
       width: 100%;
       text-align: center;
       position: relative;
       z-index: 10;
-      animation: fadeIn 1s ease-out;
+      animation: fadeIn 1.2s ease-out;
     }
 
     @keyframes fadeIn {
@@ -64,7 +75,7 @@
     .message {
       font-size: 1.05rem;
       line-height: 1.9;
-      color: #e2e8f0;
+      color: #cbd5e1;
       margin-bottom: 35px;
       text-align: left;
       font-weight: 300;
@@ -101,20 +112,23 @@
     .btn-yes {
       background: #e11d48;
       color: #ffffff;
-      box-shadow: 0 4px 15px rgba(225, 29, 72, 0.4);
+      box-shadow: 0 4px 15px rgba(225, 29, 72, 0.3);
       z-index: 2;
     }
 
     .btn-yes:hover {
       transform: scale(1.05);
-      box-shadow: 0 6px 20px rgba(225, 29, 72, 0.6);
+      box-shadow: 0 6px 20px rgba(225, 29, 72, 0.5);
     }
 
+    /* Fixed No Button (Now highly visible and elegant) */
     .btn-no {
-      background: transparent;
-      color: #94a3b8;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+      background: rgba(255, 255, 255, 0.12);
+      color: #f8fafc;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(5px);
+      transition: all 0.2s ease-out;
       white-space: nowrap;
       user-select: none;
       touch-action: none;
@@ -122,22 +136,11 @@
     }
 
     /* Success Screen */
-    .success-icon {
-      font-size: 4rem;
-      margin-bottom: 20px;
-      animation: gentlePulse 2s infinite ease-in-out;
-    }
-
-    @keyframes gentlePulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.1); }
-    }
-
     .final-love-text {
       font-family: 'Poppins', sans-serif;
-      font-size: 1.2rem;
-      line-height: 2.2;
-      color: #fbcfe8; /* Solid color ensures emojis render properly */
+      font-size: 1.25rem;
+      line-height: 2;
+      color: #fbcfe8; 
       font-weight: 400;
     }
 
@@ -158,6 +161,9 @@
 </head>
 <body>
 
+  <!-- Tech-Minimal Interactive Background -->
+  <canvas id="bg-canvas"></canvas>
+
   <!-- Main Apology Card -->
   <div class="card" id="mainCard">
     <h1>To My Queen ❤️</h1>
@@ -174,13 +180,89 @@
 
   <!-- Success Card -->
   <div class="card hidden" id="successCard">
-    <div class="success-icon">💖</div>
     <p class="final-love-text">
       I love you so so soooo sooooooooo soooooooooooooo muchhhhhh 😘 😘 😘 😘 😘 😘 😘 😘 😘 my dear love 😘 💕 💕 💕 💕
     </p>
   </div>
 
   <script>
+    // --- TECH MINIMAL BACKGROUND EFFECT ---
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const particles = [];
+    const mouse = { x: null, y: null };
+
+    // Track mouse/touch movement for the interactive glow
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener('touchmove', e => { mouse.x = e.touches[0].clientX; mouse.y = e.touches[0].clientY; });
+    window.addEventListener('mouseout', () => { mouse.x = null; mouse.y = null; });
+    window.addEventListener('touchend', () => { mouse.x = null; mouse.y = null; });
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.vx = (Math.random() - 0.5) * 0.5;
+        this.vy = (Math.random() - 0.5) * 0.5;
+        this.radius = Math.random() * 1.5 + 0.5;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if(this.x < 0 || this.x > width) this.vx *= -1;
+        if(this.y < 0 || this.y > height) this.vy *= -1;
+      }
+      draw() {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(244, 63, 94, 0.4)';
+        ctx.fill();
+      }
+    }
+
+    // Create particles based on screen size
+    const particleCount = Math.min(window.innerWidth / 15, 80);
+    for(let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateBg() {
+      ctx.clearRect(0, 0, width, height);
+      
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+        
+        // Connect particles to mouse with a delicate line
+        if (mouse.x != null && mouse.y != null) {
+          let dx = p.x - mouse.x;
+          let dy = p.y - mouse.y;
+          let dist = Math.sqrt(dx*dx + dy*dy);
+          
+          if (dist < 140) {
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(244, 63, 94, ${1 - dist/140})`;
+            ctx.lineWidth = 0.8;
+            ctx.moveTo(p.x, p.y);
+            ctx.lineTo(mouse.x, mouse.y);
+            ctx.stroke();
+          }
+        }
+      });
+      requestAnimationFrame(animateBg);
+    }
+    animateBg();
+
+    // --- BUTTON DODGE LOGIC ---
     let dodgeCount = 0;
     const phrases = [
       "no, parbe na baby..",
@@ -190,16 +272,14 @@
     ];
 
     function moveButton(e) {
-      if (e) e.preventDefault();
+      if (e && e.cancelable) e.preventDefault();
       
       const btn = document.getElementById('noBtn');
       
-      // Update text based on the phrases array
       const textIndex = dodgeCount % phrases.length;
       btn.innerText = phrases[textIndex];
       dodgeCount++;
 
-      // Move the button to a random position on the screen
       const padding = 50;
       const maxX = window.innerWidth - btn.offsetWidth - padding;
       const maxY = window.innerHeight - btn.offsetHeight - padding;
@@ -213,11 +293,8 @@
     }
 
     function acceptApology() {
-      // Hide main card, show success card
       document.getElementById('mainCard').classList.add('hidden');
       document.getElementById('successCard').classList.remove('hidden');
-      
-      // Trigger floating hearts
       triggerHearts();
     }
 
@@ -228,16 +305,12 @@
           const heart = document.createElement('div');
           heart.classList.add('floating-heart');
           heart.innerText = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
-          
-          // Random starting X position and size
           heart.style.left = Math.random() * 100 + 'vw';
           heart.style.fontSize = (Math.random() * 15 + 15) + 'px';
-          
           document.body.appendChild(heart);
 
-          // Clean up element after animation finishes
           setTimeout(() => heart.remove(), 4000);
-        }, i * 80); // Stagger the appearance
+        }, i * 80);
       }
     }
   </script>
