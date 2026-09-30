@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>For My Queen ❤️️</title>
+  <title>For My Queen ❤️</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,600&family=Poppins:wght@300;400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,700&family=Poppins:wght@300;400;500;600&display=swap');
 
     * {
       box-sizing: border-box;
@@ -34,7 +34,7 @@
       width: 100%;
       height: 100%;
       z-index: 0;
-      pointer-events: none; /* Let clicks pass through */
+      pointer-events: none; 
     }
 
     /* Elegant Glass Card with 3D & Spotlight Variables */
@@ -59,7 +59,6 @@
       transition: transform 0.1s linear, background-image 0.2s ease;
     }
 
-    /* Smoothing transition when mouse leaves */
     .card.mouse-leave {
       transition: transform 0.5s ease-out, background-image 0.5s ease-out;
     }
@@ -90,7 +89,6 @@
       margin-bottom: 35px;
       text-align: left;
       font-weight: 300;
-      /* Prevent text selection while interacting */
       user-select: none;
     }
 
@@ -101,7 +99,6 @@
       text-shadow: 0 0 10px rgba(244, 63, 94, 0.4);
     }
 
-    /* Buttons */
     .btn-container {
       display: flex;
       justify-content: center;
@@ -135,7 +132,6 @@
       box-shadow: 0 6px 20px rgba(225, 29, 72, 0.6);
     }
 
-    /* Fixed No Button */
     .btn-no {
       background: rgba(255, 255, 255, 0.12);
       color: #f8fafc;
@@ -149,17 +145,79 @@
       z-index: 50;
     }
 
-    /* Success Screen */
-    .final-love-text {
-      font-family: 'Poppins', sans-serif;
-      font-size: 1.25rem;
-      line-height: 2;
-      color: #fbcfe8; 
-      font-weight: 400;
-      text-shadow: 0 0 15px rgba(244, 63, 94, 0.3);
+    /* --- GORGEOUS SUCCESS SCREEN STYLING --- */
+    #successCard {
+      cursor: pointer;
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 40px rgba(244, 63, 94, 0.15);
     }
 
-    /* Floating Hearts */
+    .final-love-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      line-height: 1.6;
+      font-weight: 700;
+      display: inline-block;
+      /* Aesthetic glowing gradient text */
+      background: linear-gradient(45deg, #fbcfe8, #f43f5e, #fda4af);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 4s ease infinite, textPulse 2.5s infinite ease-in-out;
+    }
+
+    .tap-hint {
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.85rem;
+      color: #94a3b8;
+      margin-top: 20px;
+      font-weight: 300;
+      letter-spacing: 1px;
+      opacity: 0.7;
+      animation: fadeInOut 2s infinite;
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes textPulse {
+      0%, 100% { transform: scale(1); text-shadow: 0 0 15px rgba(244, 63, 94, 0.3); }
+      50% { transform: scale(1.03); text-shadow: 0 0 30px rgba(244, 63, 94, 0.6); }
+    }
+
+    @keyframes fadeInOut {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 0.9; }
+    }
+
+    /* --- 3D FLYING KISS EFFECT --- */
+    .flying-kiss {
+      position: fixed;
+      pointer-events: none;
+      z-index: 99999;
+      font-size: 2.5rem;
+      /* Emojis zoom directly into the camera */
+      animation: flyToFace 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+    }
+
+    @keyframes flyToFace {
+      0% { 
+        transform: translate(-50%, -50%) scale(0.1) rotate(0deg); 
+        opacity: 0; 
+      }
+      15% { 
+        opacity: 1; 
+      }
+      100% { 
+        transform: translate(-50%, -50%) scale(20) rotate(20deg); 
+        opacity: 0; 
+        filter: blur(4px); 
+      }
+    }
+
+    /* Normal Floating Hearts for background */
     .floating-heart {
       position: fixed;
       pointer-events: none;
@@ -193,11 +251,12 @@
     </div>
   </div>
 
-  <!-- Success Card -->
-  <div class="card hidden" id="successCard">
+  <!-- Gorgeous Success Card -->
+  <div class="card hidden" id="successCard" onclick="throwKisses(event)" ontouchstart="throwKisses(event)">
     <p class="final-love-text">
-      I love you so so soooo sooooooooo soooooooooooooo muchhhhhh 😘 😘 😘 😘 😘 😘 😘 😘 😘 my dear love 😘 💕 💕 💕 💕
+      I love you so so soooo sooooooooo soooooooooooooo muchhhhhh<br>my dear love 💕
     </p>
+    <p class="tap-hint">(Tap anywhere for kisses 😘)</p>
   </div>
 
   <script>
@@ -281,17 +340,14 @@
       const clientX = e.touches ? e.touches[0].clientX : e.clientX;
       const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
-      // Spotlight coordinates relative to card
       const x = clientX - rect.left;
       const y = clientY - rect.top;
       cardElement.style.setProperty('--x', `${x}px`);
       cardElement.style.setProperty('--y', `${y}px`);
 
-      // 3D Tilt calculation
       const centerX = rect.left + rect.width / 2;
       const centerY = rect.top + rect.height / 2;
       
-      // Calculate rotation (max 12 degrees)
       const rotateX = ((clientY - centerY) / (rect.height / 2)) * -8;
       const rotateY = ((clientX - centerX) / (rect.width / 2)) * 8;
 
@@ -305,7 +361,6 @@
       cardElement.style.setProperty('--y', `50%`);
     }
 
-    // Bind events for mouse and touch interactions
     window.addEventListener('mousemove', e => { 
       mouse.x = e.clientX; mouse.y = e.clientY; 
       applyCardEffect(e, mainCard);
@@ -330,21 +385,14 @@
       resetCardEffect(successCard);
     });
 
-
     // --- BUTTON DODGE LOGIC ---
     let dodgeCount = 0;
-    const phrases = [
-      "no, parbe na baby..",
-      "Korte tako..",
-      "No,",
-      "Maf kortei hobe 🥺❤️"
-    ];
+    const phrases = ["no, parbe na baby..", "Korte tako..", "No,", "Maf kortei hobe 🥺❤️"];
 
     function moveButton(e) {
       if (e && e.cancelable) e.preventDefault();
       
       const btn = document.getElementById('noBtn');
-      
       const textIndex = dodgeCount % phrases.length;
       btn.innerText = phrases[textIndex];
       dodgeCount++;
@@ -366,11 +414,61 @@
       successCard.classList.remove('hidden');
       resetCardEffect(mainCard);
       triggerHearts();
+      
+      // Fire an initial burst of kisses when they first land on the success page
+      setTimeout(() => {
+        const fakeEvent = { clientX: window.innerWidth / 2, clientY: window.innerHeight / 2 };
+        throwKisses(fakeEvent);
+      }, 500);
+    }
+
+    // --- INTERACTIVE KISSING EFFECT ---
+    function throwKisses(e) {
+      if (e && e.cancelable) e.preventDefault();
+
+      let startX, startY;
+      if (e.touches && e.touches.length > 0) {
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+      } else if (e.clientX && e.clientY) {
+        startX = e.clientX;
+        startY = e.clientY;
+      } else {
+        startX = window.innerWidth / 2;
+        startY = window.innerHeight / 2;
+      }
+
+      const kissEmojis = ['😘', '💋', '❤️️', '🥰'];
+      
+      // Fire multiple kisses at once
+      for (let i = 0; i < 6; i++) {
+        setTimeout(() => {
+          const kiss = document.createElement('div');
+          kiss.classList.add('flying-kiss');
+          kiss.innerText = kissEmojis[Math.floor(Math.random() * kissEmojis.length)];
+          
+          // Slight scatter so they don't overlap perfectly
+          const offsetX = (Math.random() - 0.5) * 80;
+          const offsetY = (Math.random() - 0.5) * 80;
+          
+          kiss.style.left = (startX + offsetX) + 'px';
+          kiss.style.top = (startY + offsetY) + 'px';
+          
+          // Randomize rotation a bit
+          const randomRotate = (Math.random() - 0.5) * 60;
+          kiss.style.setProperty('--random-rot', `${randomRotate}deg`);
+
+          document.body.appendChild(kiss);
+
+          // Remove element after animation ends
+          setTimeout(() => kiss.remove(), 1200);
+        }, i * 120);
+      }
     }
 
     function triggerHearts() {
       const heartEmojis = ['❤️', '💖', '✨', '💕', '🥰', '💗'];
-      for (let i = 0; i < 40; i++) {
+      for (let i = 0; i < 30; i++) {
         setTimeout(() => {
           const heart = document.createElement('div');
           heart.classList.add('floating-heart');
@@ -380,7 +478,7 @@
           document.body.appendChild(heart);
 
           setTimeout(() => heart.remove(), 4000);
-        }, i * 80);
+        }, i * 150);
       }
     }
   </script>
