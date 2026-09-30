@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Pull Request #143: Critical Patch for My World ❤️</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Poppins:wght@300;400;600&family=Sacramento&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      background: radial-gradient(circle at center, #1a0b2e 0%, #090314 100%);
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+      padding: 20px;
+      color: #e2e8f0;
+    }
+
+    /* Floating glowing orbs background */
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 0;
+      animation: float 10s infinite alternate ease-in-out;
+    }
+    .orb-1 { width: 300px; height: 300px; background: rgba(236, 72, 153, 0.25); top: 10%; left: 15%; }
+    .orb-2 { width: 350px; height: 350px; background: rgba(139, 92, 246, 0.25); bottom: 10%; right: 15%; }
+
+    @keyframes float {
+      0% { transform: translateY(0) scale(1); }
+      100% { transform: translateY(-30px) scale(1.1); }
+    }
+
+    /* Glassmorphic Container */
+    .container {
+      position: relative;
+      z-index: 10;
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(168, 85, 247, 0.15);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 650px;
+      width: 100%;
+      text-align: center;
+      animation: fadeIn 1.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 6px 16px;
+      background: rgba(236, 72, 153, 0.15);
+      border: 1px solid rgba(236, 72, 153, 0.4);
+      color: #f472b6;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-family: 'Fira Code', monospace;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      background: linear-gradient(135deg, #a78bfa, #f472b6, #38bdf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 15px;
+    }
+
+    .subtitle {
+      font-family: 'Sacramento', cursive;
+      font-size: 2.2rem;
+      color: #f472b6;
+      margin-bottom: 25px;
+    }
+
+    .terminal-box {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 20px;
+      text-align: left;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.88rem;
+      color: #94a3b8;
+      margin-bottom: 25px;
+      line-height: 1.7;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.5);
+    }
+
+    .terminal-box .keyword { color: #c084fc; }
+    .terminal-box .string { color: #38bdf8; }
+    .terminal-box .comment { color: #64748b; font-style: italic; }
+
+    .message {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: #cbd5e1;
+      margin-bottom: 30px;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .highlight-text {
+      color: #f472b6;
+      font-weight: 600;
+    }
+
+    /* Buttons Area */
+    .btn-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 20px;
+      min-height: 60px;
+      position: relative;
+    }
+
+    .btn {
+      padding: 14px 32px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      outline: none;
+    }
+
+    .btn-yes {
+      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      color: #ffffff;
+      box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+    }
+
+    .btn-yes:hover {
+      transform: scale(1.08);
+      box-shadow: 0 0 30px rgba(236, 72, 153, 0.8);
+    }
+
+    .btn-no {
+      background: rgba(255, 255, 255, 0.08);
+      color: #94a3b8;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      position: absolute;
+      transition: all 0.2s ease;
+    }
+
+    /* Success Overlay */
+    .success-card {
+      display: none;
+      animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes popIn {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    .heart-icon {
+      font-size: 4rem;
+      margin-bottom: 15px;
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+
+  <div class="container" id="mainCard">
+    <span class="badge">STATUS: CRITICAL_BUG_DETECTED</span>
+    
+    <h1>I'm So Sorry, My ❤️ </h1>
+    <div class="subtitle">I messed up... and I need you.</div>
+
+    <div class="terminal-box">
+      <span class="comment">// Error details: My stupid mistakes caused pain to the most precious person.</span><br>
+      <span class="keyword">try</span> {<br>
+      &nbsp;&nbsp;ownAllMyMistakes();<br>
+      &nbsp;&nbsp;askForForgiveness();<br>
+      } <span class="keyword">catch</span> (HeartBreakException e) {<br>
+      &nbsp;&nbsp;loveHerMoreThanEver(); <span class="comment">// Forever & Always</span><br>
+      }
+    </div>
+
+    <p class="message">
+      আমি জানি আমি যেসব ভুল করেছি বা কষ্ট দিয়েছি, তার কোনো অজুহাত হয় না। I know I was full of nonsense sometimes. কিন্তু বিশ্বাস করো, <span class="highlight-text">তোমাকে আমি কতটা ভালোবাসি সেটা হয়তো বলে বোঝাতে পারব না।</span><br><br>
+      আমার দুনিয়াটা তোমার হাসি ছাড়া একদম অসম্পূর্ণ। আমার এই সিস্টেমে হাজারটা বাগ থাকতে পারে, কিন্তু তোমাকে ভালোবাসার লজিকটা একদম ১০০% পারফেক্ট। প্লিজ আমাকে মাফ করে দাও... 🥺
+    </p>
+
+    <div class="btn-wrapper" id="btnWrapper">
+      <button class="btn btn-yes" onclick="acceptApology()">Yes, I Forgive You ❤️️</button>
+      <button class="btn btn-no" id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No 😜</button>
+    </div>
+  </div>
+
+  <!-- Success Card (Triggers after clicking YES) -->
+  <div class="container success-card" id="successCard">
+    <div class="heart-icon">💖✨</div>
+    <h1>PR Merged Successfully!</h1>
+    <p class="message" style="text-align: center; margin-top: 15px;">
+      থ্যাঙ্ক ইউ সো মাচ সোনা! 🥹❤️<br>
+      আই প্রমিস, তোমার মুখে সবসময় হাসি ফুটিয়ে রাখার সব চেষ্টা আমি করব। ইউ আর মাই এভরিথিং!
+    </p>
+  </div>
+
+  <script>
+    function moveButton() {
+      const btn = document.getElementById('noBtn');
+      
+      // Calculate random position relative to screen size
+      const padding = 100;
+      const x = Math.random() * (window.innerWidth - padding * 2) + padding;
+      const y = Math.random() * (window.innerHeight - padding * 2) + padding;
+
+      btn.style.position = 'fixed';
+      btn.style.left = `${x}px`;
+      btn.style.top = `${y}px`;
+    }
+
+    function acceptApology() {
+      document.getElementById('mainCard').style.display = 'none';
+      document.getElementById('successCard').style.display = 'block';
+    }
+  </script>
+
+</body>
+</html>
