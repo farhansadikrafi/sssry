@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Pull Request #143: Critical Patch for My World ❤️</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Poppins:wght@300;400;600;700&family=Sacramento&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=Alex+Brush&display=swap');
 
     * {
       box-sizing: border-box;
@@ -15,216 +15,253 @@
 
     body {
       min-height: 100vh;
-      background: radial-gradient(circle at center, #180828 0%, #080210 100%);
-      font-family: 'Poppins', sans-serif;
+      background: #030008;
+      font-family: 'Plus Jakarta Sans', sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
       overflow-x: hidden;
       padding: 20px;
-      color: #e2e8f0;
+      color: #f1f5f9;
       position: relative;
     }
 
-    /* Floating glowing orbs background */
-    .orb {
-      position: absolute;
+    /* Ambient Romantic Background Glows */
+    .glow-orb {
+      position: fixed;
       border-radius: 50%;
-      filter: blur(90px);
+      filter: blur(120px);
       z-index: 0;
-      animation: float 10s infinite alternate ease-in-out;
       pointer-events: none;
+      animation: pulseGlow 12s infinite alternate ease-in-out;
     }
-    .orb-1 { width: 320px; height: 320px; background: rgba(236, 72, 153, 0.28); top: 10%; left: 10%; }
-    .orb-2 { width: 380px; height: 380px; background: rgba(139, 92, 246, 0.28); bottom: 10%; right: 10%; }
-
-    @keyframes float {
-      0% { transform: translateY(0) scale(1); }
-      100% { transform: translateY(-30px) scale(1.1); }
+    .orb-crimson {
+      width: 450px;
+      height: 450px;
+      background: radial-gradient(circle, rgba(225, 29, 72, 0.28) 0%, rgba(159, 18, 57, 0.05) 70%);
+      top: -10%;
+      left: -10%;
+    }
+    .orb-purple {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(147, 51, 234, 0.22) 0%, rgba(88, 28, 135, 0.05) 70%);
+      bottom: -10%;
+      right: -10%;
+    }
+    .orb-center {
+      width: 300px;
+      height: 300px;
+      background: radial-gradient(circle, rgba(244, 63, 94, 0.15) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
     }
 
-    /* Glassmorphic Container */
+    @keyframes pulseGlow {
+      0% { transform: scale(1) translate(0, 0); opacity: 0.7; }
+      100% { transform: scale(1.15) translate(20px, -20px); opacity: 1; }
+    }
+
+    /* Main Glass Card */
     .container {
       position: relative;
       z-index: 10;
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.7), 0 0 40px rgba(168, 85, 247, 0.2);
+      background: rgba(15, 7, 24, 0.65);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid rgba(244, 63, 94, 0.18);
+      box-shadow: 0 30px 80px rgba(0, 0, 0, 0.9), 0 0 50px rgba(225, 29, 72, 0.15);
       border-radius: 28px;
-      padding: 40px;
+      padding: 45px 38px;
       max-width: 650px;
       width: 100%;
       text-align: center;
-      animation: fadeIn 1.2s ease-out;
+      animation: cardEntrance 1.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
+    @keyframes cardEntrance {
+      from { opacity: 0; transform: translateY(30px) scale(0.96); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
     }
 
     .badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       padding: 6px 18px;
-      background: rgba(236, 72, 153, 0.15);
-      border: 1px solid rgba(236, 72, 153, 0.4);
-      color: #f472b6;
+      background: rgba(225, 29, 72, 0.12);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      color: #fda4af;
       border-radius: 50px;
-      font-size: 0.85rem;
+      font-size: 0.8rem;
       font-family: 'Fira Code', monospace;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       letter-spacing: 1px;
-      box-shadow: 0 0 15px rgba(236, 72, 153, 0.2);
+      box-shadow: 0 0 20px rgba(225, 29, 72, 0.15);
+    }
+
+    .status-dot {
+      width: 7px;
+      height: 7px;
+      background-color: #f43f5e;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #f43f5e;
+      animation: blink 1.5s infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
     }
 
     h1 {
       font-size: 2.3rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, #c084fc, #f472b6, #38bdf8);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #ffffff 20%, #fda4af 60%, #e11d48 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
     }
 
     .subtitle {
-      font-family: 'Sacramento', cursive;
-      font-size: 2.5rem;
-      color: #f472b6;
-      margin-bottom: 22px;
-      text-shadow: 0 0 10px rgba(244, 114, 182, 0.3);
+      font-family: 'Alex Brush', cursive;
+      font-size: 2.6rem;
+      color: #f43f5e;
+      margin-bottom: 24px;
+      text-shadow: 0 0 15px rgba(244, 63, 94, 0.4);
     }
 
     .terminal-box {
-      background: rgba(12, 18, 34, 0.85);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 14px;
+      background: rgba(8, 3, 14, 0.85);
+      border: 1px solid rgba(244, 63, 94, 0.15);
+      border-radius: 16px;
       padding: 20px;
       text-align: left;
       font-family: 'Fira Code', monospace;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       color: #94a3b8;
-      margin-bottom: 25px;
+      margin-bottom: 28px;
       line-height: 1.7;
-      box-shadow: inset 0 2px 10px rgba(0,0,0,0.6);
+      box-shadow: inset 0 2px 12px rgba(0,0,0,0.8);
     }
 
-    .terminal-box .keyword { color: #c084fc; }
-    .terminal-box .string { color: #38bdf8; }
-    .terminal-box .comment { color: #64748b; font-style: italic; }
+    .terminal-box .keyword { color: #c084fc; font-weight: 600; }
+    .terminal-box .string { color: #f43f5e; }
+    .terminal-box .comment { color: #475569; font-style: italic; }
 
     .message {
       font-size: 1.05rem;
       line-height: 1.85;
-      color: #cbd5e1;
-      margin-bottom: 30px;
+      color: #e2e8f0;
+      margin-bottom: 32px;
       text-align: justify;
-      text-justify: inter-word;
+      font-weight: 300;
     }
 
     .highlight-text {
-      color: #f472b6;
-      font-weight: 600;
+      color: #f43f5e;
+      font-weight: 700;
+      text-shadow: 0 0 8px rgba(244, 63, 94, 0.3);
     }
 
-    /* Buttons Area */
+    /* Buttons Container Layout */
     .btn-wrapper {
       display: flex;
       justify-content: center;
       align-items: center;
-      gap: 20px;
+      gap: 24px;
       min-height: 70px;
       position: relative;
-      flex-wrap: wrap;
     }
 
     .btn {
-      padding: 14px 34px;
+      padding: 15px 38px;
       font-size: 1rem;
-      font-weight: 600;
+      font-weight: 700;
       border-radius: 50px;
       border: none;
       cursor: pointer;
-      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       outline: none;
-      z-index: 100;
+      letter-spacing: 0.5px;
     }
 
     .btn-yes {
-      background: linear-gradient(135deg, #ec4899, #8b5cf6);
+      background: linear-gradient(135deg, #e11d48, #9333ea);
       color: #ffffff;
-      box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+      box-shadow: 0 0 25px rgba(225, 29, 72, 0.5), 0 0 50px rgba(147, 51, 234, 0.2);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .btn-yes:hover {
       transform: scale(1.08);
-      box-shadow: 0 0 35px rgba(236, 72, 153, 0.8);
+      box-shadow: 0 0 40px rgba(225, 29, 72, 0.8), 0 0 60px rgba(147, 51, 234, 0.4);
     }
 
     .btn-no {
-      background: rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.05);
       color: #94a3b8;
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      position: absolute;
-      transition: all 0.15s ease;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      transition: all 0.15s cubic-bezier(0.2, 0.8, 0.2, 1);
       touch-action: none;
       white-space: nowrap;
+      user-select: none;
     }
 
-    .btn-exit {
-      display: none;
-      background: rgba(239, 68, 68, 0.15);
-      color: #f87171;
-      border: 1px solid rgba(239, 68, 68, 0.4);
-      margin-top: 15px;
-      font-size: 0.9rem;
-      padding: 10px 24px;
-    }
-
-    .btn-exit:hover {
-      background: rgba(239, 68, 68, 0.3);
-      box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
-    }
-
-    /* Success Card */
+    /* Success Card Styling */
     .success-card {
       display: none;
-      animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+      animation: popIn 0.9s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
     }
 
     @keyframes popIn {
-      0% { opacity: 0; transform: scale(0.8); }
+      0% { opacity: 0; transform: scale(0.85); }
       100% { opacity: 1; transform: scale(1); }
     }
 
     .heart-icon {
       font-size: 4.5rem;
       margin-bottom: 15px;
-      animation: pulse 1.2s infinite;
+      animation: heartBeat 1.3s infinite ease-in-out;
+      display: inline-block;
     }
 
-    @keyframes pulse {
+    @keyframes heartBeat {
       0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); }
+      14% { transform: scale(1.25); }
+      28% { transform: scale(1); }
+      42% { transform: scale(1.25); }
+      70% { transform: scale(1); }
     }
 
-    /* Floating Heart Animation */
+    .love-text-big {
+      font-size: 1.25rem;
+      line-height: 2;
+      color: #f1f5f9;
+      margin-top: 20px;
+      font-weight: 600;
+      text-align: center;
+      background: linear-gradient(135deg, #ffffff, #fda4af, #f43f5e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Floating Heart Elements */
     .floating-heart {
       position: fixed;
       pointer-events: none;
       z-index: 999;
-      animation: floatUp 3s linear forwards;
+      animation: floatUp 3.5s ease-out forwards;
     }
 
     @keyframes floatUp {
       0% {
-        transform: translateY(0) scale(0.8);
+        transform: translateY(0) scale(0.6) rotate(0deg);
         opacity: 1;
       }
       100% {
-        transform: translateY(-100vh) scale(1.5);
+        transform: translateY(-110vh) scale(1.6) rotate(360deg);
         opacity: 0;
       }
     }
@@ -232,11 +269,17 @@
 </head>
 <body>
 
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
+  <!-- Romantic Ambient Orbs -->
+  <div class="glow-orb orb-crimson"></div>
+  <div class="glow-orb orb-purple"></div>
+  <div class="glow-orb orb-center"></div>
 
+  <!-- Main Card -->
   <div class="container" id="mainCard">
-    <span class="badge">STATUS: CRITICAL_BUG_DETECTED</span>
+    <div class="badge">
+      <span class="status-dot"></span>
+      <span>STATUS: CRITICAL_BUG_DETECTED</span>
+    </div>
     
     <h1>I'm So Sorry, My Love ❤️</h1>
     <div class="subtitle">Prapti, you mean the world to me</div>
@@ -255,34 +298,32 @@
       I made many mistake.. <span class="highlight-text">Prapti🫠</span> and I own it completely. No excuses, no justifications. But please believe me when I say my heart belongs entirely to you. You are my queen, and my life feels completely hollow when you’re upset with me. My system might have its flaws, but loving you is the one thing that is 100% perfect. Please forgive me, my queen🥺 I love you endlessly infinity 🥺
     </p>
 
+    <!-- Side-by-Side Initial Button Wrapper -->
     <div class="btn-wrapper" id="btnWrapper">
-      <button class="btn btn-yes" onclick="acceptApology()">Yes, I Forgive You ❤</button>
+      <button class="btn btn-yes" id="yesBtn" onclick="acceptApology()">Yes, I Forgive You ❤</button>
       <button class="btn btn-no" id="noBtn" onmouseover="moveButton()" onclick="moveButton()" ontouchstart="moveButton(event)">No 😜</button>
     </div>
-
-    <button class="btn btn-exit" id="exitBtn" onclick="exitPage()">হাল ছেড়ে দিলাম / বের হয়ে গেলাম 💔</button>
   </div>
 
   <!-- Success Card (Triggers after clicking YES) -->
   <div class="container success-card" id="successCard">
     <div class="heart-icon">💖✨</div>
     <h1>PR Merged Successfully!</h1>
-    <p class="message" style="text-align: center; margin-top: 15px;">
-      থ্যাঙ্ক ইউ সো মাচ সোনা! 🥹❤️<br>
-      আই প্রমিস, তোমার মুখে সবসময় হাসি ফুটিয়ে রাখার সব চেষ্টা আমি করব। ইউ আর মাই এভরিথিং!
+    <p class="love-text-big">
+      I love you so so soooo sooooooooo soooooooooooooo muchhhhhh 😘 😘 😘 😘 😘 😘 😘 😘 😘 my dear love 😘 💕 💕 💕 💕
     </p>
   </div>
 
   <script>
     let dodgeCount = 0;
     const phrases = [
-      "No 😜",
-      "ধরে দেখাও! 😜",
-      "এত সহজ না! 😂",
-      "হাল ছেড়ে দাও! 🤪",
-      "নো ওয়ে! 🙈",
-      "চেষ্টা করো না! 🙈",
-      "ইম্পসিবল! 💥"
+      "no, parbe na baby..",
+      "Korte tako..",
+      "No,",
+      "Maf kortei hobe 🥺❤️",
+      "no, parbe na baby.. 😉",
+      "Korte tako.. 😜",
+      "Maf kortei hobe! 🥰"
     ];
 
     function moveButton(e) {
@@ -291,15 +332,12 @@
       const btn = document.getElementById('noBtn');
       dodgeCount++;
 
-      // Change text periodically
-      const textIndex = dodgeCount % phrases.length;
+      // Cycle through custom Bangla/English teasers
+      const textIndex = (dodgeCount - 1) % phrases.length;
       btn.innerText = phrases[textIndex];
 
-      // Gradually shrink button to make it extra tricky
-      const newScale = Math.max(0.6, 1 - dodgeCount * 0.05);
-      
-      // Calculate random position relative to window bounds
-      const padding = 80;
+      // Random fixed position floating across screen away from initial position
+      const padding = 100;
       const maxX = window.innerWidth - btn.offsetWidth - padding;
       const maxY = window.innerHeight - btn.offsetHeight - padding;
 
@@ -309,12 +347,7 @@
       btn.style.position = 'fixed';
       btn.style.left = `${randomX}px`;
       btn.style.top = `${randomY}px`;
-      btn.style.transform = `scale(${newScale})`;
-
-      // Reveal exit button after 5 attempts
-      if (dodgeCount >= 5) {
-        document.getElementById('exitBtn').style.display = 'inline-block';
-      }
+      btn.style.zIndex = '999';
     }
 
     function acceptApology() {
@@ -323,23 +356,20 @@
       triggerHearts();
     }
 
-    function exitPage() {
-      alert("ধুর পাগলী! বের হওয়া এত সহজ নাকি? মাফ করতেই হবে! ❤️🥺");
-    }
-
     function triggerHearts() {
-      for (let i = 0; i < 40; i++) {
+      const heartTypes = ['❤️', '💖', '✨', '💕', '🥰', '😘', '💗'];
+      for (let i = 0; i < 60; i++) {
         setTimeout(() => {
           const heart = document.createElement('div');
           heart.classList.add('floating-heart');
-          heart.innerText = ['❤️', '💖', '✨', '💕', '🥰'][Math.floor(Math.random() * 5)];
+          heart.innerText = heartTypes[Math.floor(Math.random() * heartTypes.length)];
           heart.style.left = Math.random() * 100 + 'vw';
           heart.style.top = '100vh';
-          heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+          heart.style.fontSize = (Math.random() * 25 + 20) + 'px';
           document.body.appendChild(heart);
 
-          setTimeout(() => heart.remove(), 3000);
-        }, i * 70);
+          setTimeout(() => heart.remove(), 3500);
+        }, i * 60);
       }
     }
   </script>
